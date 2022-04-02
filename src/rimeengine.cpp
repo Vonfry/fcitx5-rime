@@ -164,7 +164,10 @@ void RimeEngine::rimeStart(bool fullcheck) {
             RIME_ERROR() << "Failed to create user directory: " << userDir;
         }
     }
-    const char *sharedDataDir = RIME_DATA_DIR;
+    const char *sharedDataDir = getenv("NIX_RIME_DATA_DIRS");
+    if (!sharedDataDir) {
+        sharedDataDir = RIME_DATA_DIR;
+    }
 
     RIME_STRUCT(RimeTraits, fcitx_rime_traits);
     fcitx_rime_traits.shared_data_dir = sharedDataDir;
